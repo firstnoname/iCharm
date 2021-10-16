@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:i_charm/blocs/app_manager/app_manager_bloc.dart';
 import 'package:i_charm/utilities/utilities.dart';
 import 'package:i_charm/views/views.dart';
 
@@ -9,11 +11,17 @@ class ICharmApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: appTheme(),
-      home: _buildHome(),
+      home: _buildApp(),
     );
   }
 
-  _buildHome() {
-    return const SplashScreen();
+  _buildApp() {
+    return BlocBuilder<AppManagerBloc, AppManagerState>(
+      builder: (context, state) {
+        Widget displayWidget = const Text('test');
+
+        return displayWidget;
+      },
+    );
   }
 }

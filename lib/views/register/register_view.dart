@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:i_charm/views/login/phone_auth_form.dart';
 import 'package:i_charm/views/views.dart';
 
 class RegisterView extends StatelessWidget {
@@ -138,7 +139,7 @@ class RegisterView extends StatelessWidget {
                     onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LoginView(),
+                          builder: (context) => PhoneAuthForm(),
                         )),
                     child: const Text('Register'))
               ],

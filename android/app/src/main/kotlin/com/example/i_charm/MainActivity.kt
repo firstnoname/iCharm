@@ -1,4 +1,4 @@
-package com.example.i_charm
+package com.hexa.icharm
 
 import io.flutter.embedding.android.FlutterActivity
 

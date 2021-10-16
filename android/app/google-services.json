@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1084498170814",
+    "project_id": "icharm-566eb",
+    "storage_bucket": "icharm-566eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1084498170814:android:dd80755fca93b3a7829fef",
+        "android_client_info": {
+          "package_name": "com.hexa.icharm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1084498170814-ln8ursq6s4l0h8thm144ppk9t3jcp1e5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hexa.icharm",
+            "certificate_hash": "834b63f64dd963540f1313203b70900941b7eb2c"
+          }
+        },
+        {
+          "client_id": "1084498170814-1sanl94ks0ekcufj2761kn54rm8tc2m2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrkzNxO7RJgo97c8pLiO4NTEpkeXx-j4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1084498170814-1sanl94ks0ekcufj2761kn54rm8tc2m2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1084498170814-qk6rpr59inonsj5tdii3tjre1mga6ulq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hexa.icharm"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
