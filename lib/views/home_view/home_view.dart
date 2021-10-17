@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:i_charm/utilities/utilities.dart';
+import 'package:i_charm/views/views.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -51,26 +52,33 @@ class HomeView extends StatelessWidget {
               crossAxisCount: 2,
               children: _menusData
                   .map(
-                    (menu) => Container(
-                      decoration: const BoxDecoration(
-                        color: secondaryColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SvgPicture.asset(
-                            menu['icon'],
-                            height: _imageSize,
-                            width: _imageSize,
+                    (menu) => GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MyICharmVIew(),
+                          )),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: secondaryColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
                           ),
-                          const SizedBox(height: 8),
-                          Text(menu['title']),
-                        ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset(
+                              menu['icon'],
+                              height: _imageSize,
+                              width: _imageSize,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(menu['title']),
+                          ],
+                        ),
                       ),
                     ),
                   )

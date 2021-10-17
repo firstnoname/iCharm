@@ -8,4 +8,4 @@ abstract class AppManagerEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AppManagerEventInitialedApp extends AppManagerEvent {}
+class AppManagerEventInitialApp extends AppManagerEvent {}

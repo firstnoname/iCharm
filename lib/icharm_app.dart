@@ -9,9 +9,16 @@ class ICharmApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: appTheme(),
-      home: _buildApp(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (ctx) => AppManagerBloc(),
+        )
+      ],
+      child: MaterialApp(
+        theme: appTheme(),
+        home: _buildApp(),
+      ),
     );
   }
 
@@ -20,7 +27,9 @@ class ICharmApp extends StatelessWidget {
       builder: (context, state) {
         Widget displayWidget = const Text('test');
 
-        return displayWidget;
+        return Scaffold(
+          body: Center(child: displayWidget),
+        );
       },
     );
   }
