@@ -35,11 +35,18 @@ class LoginView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text('Don\'t have an account?'),
-                    Text('Register here')
+                  children: [
+                    const Text('Don\'t have an account? '),
+                    TextButton(
+                      child: const Text('Register here'),
+                      onPressed: () {},
+                    )
                   ],
                 ),
+              ),
+              TextButton(
+                child: const Text('See as guest'),
+                onPressed: () {},
               ),
             ],
           ),

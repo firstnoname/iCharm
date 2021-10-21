@@ -1,3 +1,5 @@
+import 'package:i_charm/models/models.dart';
+
 /// country : "string"
 /// subArea : [{"description":"province","value":"string"}]
 /// streetName : "string"
@@ -13,7 +15,6 @@ class Address {
   String? houseNumber;
   String? postalCode;
   Geolocation? geolocation;
-  List<Area?>? subArea;
 
   //GeoFirePoint? geolocation;
 
@@ -24,7 +25,6 @@ class Address {
     this.houseNumber,
     this.postalCode,
     this.geolocation,
-    this.subArea,
   });
 
   Address.empty() : this.fromJson({});
@@ -37,14 +37,7 @@ class Address {
         postalCode = json["postalCode"],
         geolocation = json["geoLocation"] != null
             ? Geolocation.fromJson(json["geoLocation"])
-            : Geolocation.empty(),
-        subArea = <Area>[] {
-    if (json["subArea"] != null) {
-      json["subArea"].forEach((v) {
-        subArea!.add(Area.fromJson(v));
-      });
-    }
-  }
+            : Geolocation.empty();
 
   get isNotEmpty => !isEmpty;
 
@@ -54,8 +47,7 @@ class Address {
       floor == null &&
       houseNumber == null &&
       postalCode == null &&
-      geolocation == null &&
-      (subArea?.isEmpty ?? true);
+      geolocation == null;
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
@@ -77,10 +69,7 @@ class Address {
     if (geolocation?.isNotEmpty ?? false) {
       map["geoLocation"] = geolocation!.toJson();
     }
-    if (subArea?.isNotEmpty ?? false || subArea?[0] != null) {
-      print('object');
-      map["subArea"] = subArea!.map((v) => v!.toJson()).toList();
-    }
+
     return map;
   }
 }

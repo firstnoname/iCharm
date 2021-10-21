@@ -11,3 +11,7 @@ abstract class AppManagerState extends Equatable {
 class AppManagerInitialInProgress extends AppManagerState {}
 
 class AppManagerStateInitialSuccess extends AppManagerState {}
+
+class AppManagerStateAuthenticated extends AppManagerState {}
+
+class AppManagerStateUnauthenticated extends AppManagerState {}

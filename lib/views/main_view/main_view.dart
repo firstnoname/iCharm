@@ -56,12 +56,12 @@ class _MainViewState extends State<MainView> {
             label: 'หน้าหลัก',
           ),
           BottomNavigationBarItem(
-            activeIcon: Icon(Icons.home),
+            activeIcon: Icon(Icons.shopping_cart),
             icon: Icon(Icons.shopping_cart),
             label: 'ซื้อสินค้า',
           ),
           BottomNavigationBarItem(
-            activeIcon: Icon(Icons.home),
+            activeIcon: Icon(Icons.person),
             icon: Icon(Icons.person),
             label: 'โปรไฟล์',
           )

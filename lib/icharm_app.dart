@@ -12,7 +12,7 @@ class ICharmApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (ctx) => AppManagerBloc(),
+          create: (ctx) => AppManagerBloc()..add(AppManagerEventInitialApp()),
         )
       ],
       child: MaterialApp(
@@ -27,9 +27,14 @@ class ICharmApp extends StatelessWidget {
       builder: (context, state) {
         Widget displayWidget = const Text('test');
 
-        return Scaffold(
-          body: Center(child: displayWidget),
-        );
+        if (state is AppManagerInitialInProgress) {
+          displayWidget = const SplashScreen();
+        } else if (state is AppManagerStateAuthenticated) {
+          displayWidget = const MainView();
+        } else {
+          displayWidget = const LoginView();
+        }
+        return displayWidget;
       },
     );
   }
