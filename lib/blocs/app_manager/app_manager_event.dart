@@ -9,3 +9,5 @@ abstract class AppManagerEvent extends Equatable {
 }
 
 class AppManagerEventInitialApp extends AppManagerEvent {}
+
+class AppManagerEventLoginSuccess extends AppManagerEvent {}

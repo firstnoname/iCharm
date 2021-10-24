@@ -37,6 +37,7 @@ dependencies:
   flutter_svg: ^0.22.0
   flutter_bloc: ^7.1.0
   equatable: ^2.0.3
+  liquid_progress_indicator: ^0.4.0
 
   # Firebase services.
   firebase_core: ^1.6.0
@@ -77,6 +78,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/profile/
+    - assets/images/my_icharm/
     - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see

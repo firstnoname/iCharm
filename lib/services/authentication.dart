@@ -7,6 +7,8 @@ class Authentication {
   static Authentication? _cache;
   final FirebaseAuth _firebaseAuth;
 
+  User? get firebaseCurrentUser => _firebaseAuth.currentUser;
+
   factory Authentication(AppManagerBloc appManagerBloc) {
     _cache ??= Authentication._(appManagerBloc);
     return _cache!;
@@ -42,11 +44,23 @@ class Authentication {
       .then((_) => print('Log out succeeded'))
       .catchError((e) => print('Error occurred: ${e.toString()}'));
 
+  Future<void> signInWithCredential(AuthCredential credential,
+      {BaseBloc? bloc}) async {
+    await _firebaseAuth.signInWithCredential(credential);
+    await checkCurrentUserProfile();
+  }
+
   checkCurrentUserProfile() async {
+    var user = _firebaseAuth.currentUser;
+    var member = await UserAPI().getUser(_firebaseAuth.currentUser!.uid);
+    if (user != null) {
+      // _appManagerBloc.updateCurrentUserProfile(user, member);
+    }
+
+    // _appManagerBloc.add(AppManagerLoginSuccessed());
     // UserAPI().getUserProfile(_firebaseAuth.currentUser!.uid).then((user) async {
     //   if (user == null) {
-    //     // ปิด dialog
-    //     _appManagerBloc.registerState = true;
+
     //     _appManagerBloc.updateCurrentUserProfile(
     //         life.User.fromFirebaseUser(_firebaseAuth.currentUser!));
     //     _appManagerBloc.add(AppManagerEventUserInfoRequested());

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:i_charm/views/main_view/main_view.dart';
+import 'package:i_charm/views/views.dart';
 import 'package:i_charm/widgets/widgets.dart';
 
 class LoginView extends StatelessWidget {
@@ -39,14 +40,22 @@ class LoginView extends StatelessWidget {
                     const Text('Don\'t have an account? '),
                     TextButton(
                       child: const Text('Register here'),
-                      onPressed: () {},
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterView(),
+                          )),
                     )
                   ],
                 ),
               ),
               TextButton(
                 child: const Text('See as guest'),
-                onPressed: () {},
+                onPressed: () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MainView(),
+                    )),
               ),
             ],
           ),
