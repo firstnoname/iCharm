@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:i_charm/utilities/utilities.dart';
+import 'package:i_charm/views/views.dart';
 import 'package:i_charm/widgets/widgets.dart';
 
 class MyICharmVIew extends StatelessWidget {
@@ -34,10 +35,10 @@ class MyICharmVIew extends StatelessWidget {
                         const Text('Change to Aligner #4'),
                       ],
                     ),
-                    Container(
+                    const SizedBox(
                       height: 150,
                       width: 150,
-                      child: const CustomProgressIndicator(),
+                      child: CustomProgressIndicator(),
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -45,9 +46,38 @@ class MyICharmVIew extends StatelessWidget {
                       children: [
                         SvgPicture.asset(
                             'assets/images/my_icharm/play_pause_icon.svg'),
-                        SvgPicture.asset(
-                            'assets/images/my_icharm/timer_icon.svg')
+                        IconButton(
+                          icon: SvgPicture.asset(
+                              'assets/images/my_icharm/reminder_icon.svg'),
+                          onPressed: () => showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const CreateReminderDialog();
+                            },
+                          ),
+                        )
                       ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                  'assets/images/my_icharm/calendar_icon.svg'),
+                              const SizedBox(width: 8),
+                              const Text(
+                                'ใน 100 วัน',
+                                style: TextStyle(color: primaryColor),
+                              ),
+                            ],
+                          ),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ScheduleView(),
+                              ))),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -130,7 +160,11 @@ class MyICharmVIew extends StatelessWidget {
                 ),
                 icon: const Icon(Icons.camera_alt_outlined),
                 label: const Text('ถ่ายรูปฟันของคุณ'),
-                onPressed: () {},
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TakePhotoStepper(),
+                    )),
               ),
             ],
           ),

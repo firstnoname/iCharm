@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_charm/blocs/app_manager/app_manager_bloc.dart';
@@ -5,14 +6,16 @@ import 'package:i_charm/utilities/utilities.dart';
 import 'package:i_charm/views/views.dart';
 
 class ICharmApp extends StatelessWidget {
-  const ICharmApp({Key? key}) : super(key: key);
+  final CameraDescription firstCamera;
+  const ICharmApp({Key? key, required this.firstCamera}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (ctx) => AppManagerBloc()..add(AppManagerEventInitialApp()),
+          create: (ctx) =>
+              AppManagerBloc(firstCamera)..add(AppManagerEventInitialApp()),
         )
       ],
       child: MaterialApp(

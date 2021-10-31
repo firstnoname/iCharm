@@ -27,7 +27,7 @@ class RegisterBloc extends BaseBloc<RegisterEvent, RegisterState> {
   void _verifyPhoneNumber(String phoneNumber) async {
     await appManagerBloc.appAuth
         .verifyPhoneNumber(
-            phoneNumber: phoneNumber,
+            phoneNumber: '+66$phoneNumber',
             verificationCompleted: (phoneAuthCredential) async {
               await appManagerBloc.appAuth
                   .signInWithCredential(phoneAuthCredential);
