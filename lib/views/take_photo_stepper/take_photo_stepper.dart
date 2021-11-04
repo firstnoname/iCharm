@@ -33,7 +33,7 @@ class _TakePhotoStepperState extends State<TakePhotoStepper> {
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => TakePictureScreen(),
+                            builder: (context) => const TakePictureScreen(),
                           ),
                         ),
                       ),

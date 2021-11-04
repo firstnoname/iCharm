@@ -86,6 +86,7 @@ flutter:
     - assets/images/
     - assets/images/profile/
     - assets/images/my_icharm/
+    - assets/images/photo_frame/
     - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see

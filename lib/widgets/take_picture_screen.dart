@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:i_charm/blocs/app_manager/app_manager_bloc.dart';
 
 class TakePictureScreen extends StatefulWidget {
@@ -45,7 +46,13 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
             // If the Future is complete, display the preview.
             return Column(
               children: [
-                CameraPreview(_controller),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    CameraPreview(_controller),
+                    SvgPicture.asset('assets/images/photo_frame/frame_1.svg'),
+                  ],
+                ),
                 Text('test'),
               ],
             );
