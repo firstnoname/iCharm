@@ -19,6 +19,7 @@ class ICharmApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: appTheme(),
         home: _buildApp(),
       ),

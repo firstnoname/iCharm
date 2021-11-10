@@ -1,5 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:i_charm/utilities/utilities.dart';
+import 'package:i_charm/views/take_photo_stepper/camera_layout.dart';
 import 'package:i_charm/widgets/widgets.dart';
+
+import 'package:im_stepper/stepper.dart';
 
 class TakePhotoStepper extends StatefulWidget {
   const TakePhotoStepper({Key? key}) : super(key: key);
@@ -9,113 +14,70 @@ class TakePhotoStepper extends StatefulWidget {
 }
 
 class _TakePhotoStepperState extends State<TakePhotoStepper> {
-  int _currentStep = 0;
+  int activeStep = 0;
+
+  int upperBound = 2;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
-        children: [
-          Expanded(
-            child: Stepper(
-              type: StepperType.horizontal,
-              physics: const ScrollPhysics(),
-              currentStep: _currentStep,
-              onStepTapped: (step) => tapped(step),
-              onStepContinue: continued,
-              onStepCancel: cancel,
-              steps: <Step>[
-                Step(
-                  title: const Text('1'),
-                  content: Column(
-                    children: <Widget>[
-                      IconButton(
-                        icon: const Icon(Icons.camera),
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const TakePictureScreen(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 0
-                      ? StepState.complete
-                      : StepState.disabled,
+      appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('ยืนยันข้อมูล'),
+                  content: const Text('ยืนยันข้อมูลและส่งข้อมูลไปยังแพทย์'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'ยกเลิก'),
+                      child: const Text('ยกเลิก'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context, 'ตกลง');
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const UpdatePhotosSuccess()));
+                      },
+                      child: const Text('ตกลง'),
+                    ),
+                  ],
                 ),
-                Step(
-                  title: const Text('2'),
-                  content: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        decoration:
-                            const InputDecoration(labelText: 'Home Address'),
-                      ),
-                      TextFormField(
-                        decoration:
-                            const InputDecoration(labelText: 'Postcode'),
-                      ),
-                    ],
-                  ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 1
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-                Step(
-                  title: const Text('3'),
-                  content: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        decoration:
-                            const InputDecoration(labelText: 'Mobile Number'),
-                      ),
-                    ],
-                  ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 2
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-                Step(
-                  title: const Text('4'),
-                  content: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        decoration:
-                            const InputDecoration(labelText: 'Mobile Number'),
-                      ),
-                    ],
-                  ),
-                  isActive: _currentStep >= 0,
-                  state: _currentStep >= 3
-                      ? StepState.complete
-                      : StepState.disabled,
-                ),
-              ],
+              ),
+              child: const Icon(Icons.check_circle),
             ),
           ),
         ],
       ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: NumberStepper(
+              activeStepBorderColor: primaryColor,
+              activeStepColor: primaryColor,
+              numbers: const [1, 2, 3, 4],
+              numberStyle: const TextStyle(color: Colors.white),
+              stepRadius: 12,
+              scrollingDisabled: true,
+              activeStep: activeStep,
+              // This ensures step-tapping updates the activeStep.
+              onStepReached: (index) {
+                setState(() {
+                  activeStep = index;
+                });
+              },
+            ),
+          ),
+          CameraLayout(activeStep: activeStep),
+        ],
+      ),
     );
-  }
-
-  switchStepsType() {
-    // setState(() => stepperType == StepperType.vertical
-    //     ? stepperType = StepperType.horizontal
-    //     : stepperType = StepperType.vertical);
-  }
-
-  tapped(int step) {
-    setState(() => _currentStep = step);
-  }
-
-  continued() {
-    _currentStep < 2 ? setState(() => _currentStep += 1) : null;
-  }
-
-  cancel() {
-    _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
   }
 }

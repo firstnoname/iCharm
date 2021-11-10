@@ -152,20 +152,7 @@ class MyICharmVIew extends StatelessWidget {
                   onPressed: () {},
                 ),
               ),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                ),
-                icon: const Icon(Icons.camera_alt_outlined),
-                label: const Text('ถ่ายรูปฟันของคุณ'),
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const TakePhotoStepper(),
-                    )),
-              ),
+              const TakePhotoButton(),
             ],
           ),
         ),
