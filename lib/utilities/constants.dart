@@ -1,0 +1,1 @@
+const Duration slideAnimationDuration = Duration(milliseconds: 500);

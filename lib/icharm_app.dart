@@ -36,7 +36,7 @@ class ICharmApp extends StatelessWidget {
         } else if (state is AppManagerStateAuthenticated) {
           displayWidget = const MainView();
         } else {
-          displayWidget = const LoginView();
+          displayWidget = LoginView();
         }
         return displayWidget;
       },
