@@ -9,6 +9,12 @@ abstract class LoginState extends Equatable {
 
 class LoginInitial extends LoginState {}
 
+class LoginStateFailure extends LoginState {
+  final String failureReason;
+
+  const LoginStateFailure(this.failureReason);
+}
+
 class LoginStateSMSReceivedSuccess extends LoginState {
   final String phoneNumber;
   final int? resendToken;

@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
+
 class User {
   static const String collection = 'users';
 
@@ -6,6 +8,7 @@ class User {
   String lastName;
   DateTime dateOfBirth;
   String? identityCard;
+  String? phoneNumber;
   String? token;
 
   String get displayName => "$firstName $lastName";
@@ -16,6 +19,7 @@ class User {
       required this.lastName,
       required this.dateOfBirth,
       this.identityCard,
+      this.phoneNumber,
       this.token});
 
   Map<String, dynamic> toJsonWithoutID() {
@@ -29,6 +33,7 @@ class User {
     map['lastName'] = lastName;
     map['dateOfBirth'] = dateOfBirth.toIso8601String();
     map['identityCard'] = identityCard;
+    map['phoneNumber'] = phoneNumber;
 
     return map;
   }
@@ -37,5 +42,22 @@ class User {
       : firstName = json['firstName'],
         lastName = json['lastName'],
         dateOfBirth = DateTime.parse(json["dateOfBirth"]),
-        identityCard = json['identityCard'];
+        identityCard = json['identityCard'],
+        phoneNumber = json['phoneNumber'];
+
+  factory User.fromFirebaseUser(firebase.User user) {
+    // var contact = Contact(
+    //   primaryPhoneNumber: user.phoneNumber,
+    //   primaryEmail: user.email,
+    // );
+    // var accountImage = ImageRepository(
+    //   profileURL: user.photoURL,
+    // );
+    return User(
+      id: user.uid,
+      firstName: '',
+      lastName: '',
+      dateOfBirth: DateTime.now(),
+    );
+  }
 }

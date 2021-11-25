@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:i_charm/blocs/blocs.dart';
 import 'package:i_charm/services/services.dart';
+import 'package:i_charm/models/models.dart' as hexa;
 
 class Authentication {
   final AppManagerBloc _appManagerBloc;
@@ -44,8 +45,19 @@ class Authentication {
       .then((_) => print('Log out succeeded'))
       .catchError((e) => print('Error occurred: ${e.toString()}'));
 
-  Future<void> signInWithCredential(AuthCredential credential,
-      {BaseBloc? bloc}) async {
+  Future<void> signInWithPhoneNumber(
+    String verificationId,
+    String smsCode,
+  ) async {
+    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+      verificationId: verificationId,
+      smsCode: smsCode,
+    );
+
+    await signInWithCredential(phoneAuthCredential);
+  }
+
+  Future<void> signInWithCredential(AuthCredential credential) async {
     await _firebaseAuth.signInWithCredential(credential);
     await checkCurrentUserProfile();
   }
@@ -53,8 +65,11 @@ class Authentication {
   checkCurrentUserProfile() async {
     var user = _firebaseAuth.currentUser;
     var member = await UserAPI().getUser(_firebaseAuth.currentUser!.uid);
-    if (user != null) {
-      // _appManagerBloc.updateCurrentUserProfile(user, member);
+    if (user == null) {
+      // _appManagerBloc.registerState = true;
+      _appManagerBloc.updateCurrentUserProfile(
+          hexa.User.fromFirebaseUser(_firebaseAuth.currentUser!));
+      _appManagerBloc.add(AppManagerEventUserInfoRequested());
     }
 
     // _appManagerBloc.add(AppManagerLoginSuccessed());

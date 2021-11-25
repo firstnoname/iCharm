@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:i_charm/blocs/app_manager/app_manager_bloc.dart';
 
 part 'login_event.dart';
@@ -17,6 +18,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc(this._appManagerBloc) : super(LoginInitial()) {
     on<LoginEventSubmittedPhoneNumber>(_onSubmitPhoneNumber);
     on<LoginEventSMSReceived>(_onSMSReceived);
+    on<LoginEventOTPSubmitted>(_onOTPSubmitted);
   }
 
   FutureOr<void> _onSubmitPhoneNumber(
@@ -34,6 +36,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   FutureOr<void> _onSMSReceived(
       LoginEventSMSReceived event, Emitter<LoginState> emit) {}
+
+  FutureOr<void> _onOTPSubmitted(
+      LoginEventOTPSubmitted event, Emitter<LoginState> emit) async {
+    try {
+      await _appManagerBloc.appAuth
+          .signInWithPhoneNumber(_verificationId, event.otpCode);
+    } on FirebaseAuthException catch (e) {
+      String message;
+      switch (e.code) {
+        case 'invalid-verification-code':
+          message = 'otp ไม่ถูกต้อง';
+          break;
+        default:
+          message = e.code;
+      }
+      emit(LoginStateFailure(message));
+    }
+  }
 
   void _verifyPhoneNumber(String phoneNumber) async {
     await _appManagerBloc.appAuth

@@ -15,3 +15,5 @@ class AppManagerStateInitialSuccess extends AppManagerState {}
 class AppManagerStateAuthenticated extends AppManagerState {}
 
 class AppManagerStateUnauthenticated extends AppManagerState {}
+
+class AppManagerStatePolicyShowed extends AppManagerState {}

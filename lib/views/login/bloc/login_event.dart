@@ -18,3 +18,9 @@ class LoginEventSubmittedPhoneNumber extends LoginEvent {
 }
 
 class LoginEventSMSReceived extends LoginEvent {}
+
+class LoginEventOTPSubmitted extends LoginEvent {
+  final String otpCode;
+
+  const LoginEventOTPSubmitted({required this.otpCode});
+}

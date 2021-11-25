@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:i_charm/views/login/bloc/login_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPView extends StatefulWidget {
@@ -33,15 +35,15 @@ class _OTPViewState extends State<OTPView> {
                       "assets/images/splash_screen_welcome_logo.svg")),
               FittedBox(
                 child: Text(
-                  '_localization!.title',
+                  'กรุณาใส่รหัส OTP',
                   style: Theme.of(context).textTheme.headline5,
                 ),
               ),
               FittedBox(
                 child: Text(
-                  widget.phoneNumber,
+                  'ที่ส่งไปยังเบอร์ +66${widget.phoneNumber}',
                   style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                        color: Color.fromRGBO(115, 115, 115, 1),
+                        color: const Color.fromRGBO(115, 115, 115, 1),
                       ),
                 ),
               ),
@@ -59,7 +61,7 @@ class _OTPViewState extends State<OTPView> {
         return Column(
           children: [
             ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 300),
+              constraints: const BoxConstraints(maxWidth: 300),
               child: Form(
                 key: formKey,
                 child: PinCodeTextField(
@@ -78,9 +80,12 @@ class _OTPViewState extends State<OTPView> {
                       });
                     }
                   },
-                  // onSaved: (value) =>
-                  //     BlocProvider.of<LoginViewBloc>(context).smsCode = value,
-                  // animationType: AnimationType.none,
+                  onSaved: (value) {
+                    print('otp -> $value');
+                    BlocProvider.of<LoginBloc>(context)
+                        .add(LoginEventOTPSubmitted(otpCode: value ?? ''));
+                  },
+                  animationType: AnimationType.none,
                 ),
               ),
             ),
@@ -90,7 +95,7 @@ class _OTPViewState extends State<OTPView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('_localization!.resendDescription'),
+                const Text('ไม่ได้รับรหัส?'),
                 TextButton(
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.all(4.0),
@@ -100,7 +105,7 @@ class _OTPViewState extends State<OTPView> {
                   //   LoginViewEventResentOTP(),
                   // ),
                   onPressed: () {},
-                  child: Text('_localization!.resend'),
+                  child: const Text('ส่งใหม่'),
                 )
               ],
             ),
@@ -113,11 +118,11 @@ class _OTPViewState extends State<OTPView> {
                 onPressed: readyToSubmit
                     ? () {
                         formKey.currentState?.save();
-                        // BlocProvider.of<LoginViewBloc>(context)
-                        //     .add(LoginViewEventPhoneCodeSubmitted());
+                        // BlocProvider.of<LoginBloc>(context)
+                        //     .add(const LoginEventOTPSubmitted(otpCode: ''));
                       }
                     : null,
-                child: Text(MaterialLocalizations.of(context).okButtonLabel),
+                child: const Text('ตกลง'),
               ),
             ),
             const SizedBox(
@@ -129,8 +134,7 @@ class _OTPViewState extends State<OTPView> {
                   // BlocProvider.of<LoginViewBloc>(context)
                   //     .add(LoginViewEventClosedOTPView());
                 },
-                child:
-                    Text(MaterialLocalizations.of(context).cancelButtonLabel))
+                child: const Text('ยเลิก'))
           ],
         );
       },

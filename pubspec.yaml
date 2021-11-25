@@ -47,6 +47,7 @@ dependencies:
   path_provider: ^2.0.6
   # Creates paths that work on any platform.
   path: ^1.8.0
+  webview_flutter: ^2.3.1
 
   # Firebase services.
   firebase_core: ^1.6.0
