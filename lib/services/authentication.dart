@@ -69,7 +69,7 @@ class Authentication {
       // _appManagerBloc.registerState = true;
       _appManagerBloc.updateCurrentUserProfile(
           hexa.User.fromFirebaseUser(_firebaseAuth.currentUser!));
-      _appManagerBloc.add(AppManagerEventUserInfoRequested());
+      _appManagerBloc.add(AppManagerEventShowUserPolicy());
     }
 
     // _appManagerBloc.add(AppManagerLoginSuccessed());
