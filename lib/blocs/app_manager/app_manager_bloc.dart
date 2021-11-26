@@ -28,11 +28,11 @@ class AppManagerBloc extends Bloc<AppManagerEvent, AppManagerState> {
     on<AppManagerEventLoginSuccess>(_onAppManagerLoginSuccess);
   }
 
-  void _onAppManagerInitial(
-      AppManagerEventInitialApp event, Emitter<AppManagerState> emit) {
+  Future<void> _onAppManagerInitial(
+      AppManagerEventInitialApp event, Emitter<AppManagerState> emit) async {
     if (_appAuth.isLoggedIn()) {
       try {
-        _appAuth.checkCurrentUserProfile();
+        await _appAuth.checkCurrentUserProfile();
       } catch (e) {
         print(e.toString());
 

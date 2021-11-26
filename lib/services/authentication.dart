@@ -63,35 +63,17 @@ class Authentication {
   }
 
   checkCurrentUserProfile() async {
-    var user = _firebaseAuth.currentUser;
-    var member = await UserAPI().getUser(_firebaseAuth.currentUser!.uid);
-    if (user == null) {
-      // _appManagerBloc.registerState = true;
-      _appManagerBloc.updateCurrentUserProfile(
-          hexa.User.fromFirebaseUser(_firebaseAuth.currentUser!));
-      _appManagerBloc.add(AppManagerEventShowUserPolicy());
-    }
 
-    // _appManagerBloc.add(AppManagerLoginSuccessed());
-    // UserAPI().getUserProfile(_firebaseAuth.currentUser!.uid).then((user) async {
-    //   if (user == null) {
+    UserAPI().getUser(_firebaseAuth.currentUser!.uid).then((user) async {
+      if (user == null) {
+        // _appManagerBloc.registerState = true;
+        _appManagerBloc.updateCurrentUserProfile(
+            hexa.User.fromFirebaseUser(_firebaseAuth.currentUser!));
+        _appManagerBloc.add(AppManagerEventShowUserPolicy());
+      } else {
+        print('user not null ');
+      }
+    });
 
-    //     _appManagerBloc.updateCurrentUserProfile(
-    //         life.User.fromFirebaseUser(_firebaseAuth.currentUser!));
-    //     _appManagerBloc.add(AppManagerEventUserInfoRequested());
-    //   } else {
-    //     // มีแล้ว ก็ login เข้าไปเลย
-    //     _appManagerBloc.updateCurrentUserProfile(user);
-    //     // get token notification
-    //     String token = await getTokenNotification();
-    //     if (token != user.tokenNotification) {
-    //       // จะได้ไม่ต้องยิงบ่อยๆ
-    //       user.tokenNotification = token;
-    //       // update ใน could firestore
-    //       UserAPI().editProfile(user);
-    //     }
-    //     _appManagerBloc.add(AppManagerEventLoginSucceeded());
-    //   }
-    // });
   }
 }

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_charm/blocs/app_manager/app_manager_bloc.dart';
 import 'package:i_charm/utilities/utilities.dart';
+import 'package:i_charm/views/register/policy_agreement.dart';
 import 'package:i_charm/views/views.dart';
 
 class ICharmApp extends StatelessWidget {
   final CameraDescription firstCamera;
+
   const ICharmApp({Key? key, required this.firstCamera}) : super(key: key);
 
   @override
@@ -35,6 +37,8 @@ class ICharmApp extends StatelessWidget {
           displayWidget = const SplashScreen();
         } else if (state is AppManagerStateAuthenticated) {
           displayWidget = const MainView();
+        } else if (state is AppManagerStatePolicyShowed) {
+          displayWidget = const PolicyAgreement();
         } else {
           displayWidget = LoginView();
         }

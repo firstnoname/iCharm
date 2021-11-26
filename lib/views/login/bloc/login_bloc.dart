@@ -21,11 +21,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginEventOTPSubmitted>(_onOTPSubmitted);
   }
 
-  FutureOr<void> _onSubmitPhoneNumber(
-      LoginEventSubmittedPhoneNumber event, Emitter<LoginState> emit) {
+  Future<FutureOr<void>> _onSubmitPhoneNumber(
+      LoginEventSubmittedPhoneNumber event, Emitter<LoginState> emit) async {
     // Sent a phone number and waiting for sms.
     try {
-      _verifyPhoneNumber(event.phoneNumber);
+      await _verifyPhoneNumber(event.phoneNumber);
       emit(LoginStateSMSReceivedSuccess(
           phoneNumber: event.phoneNumber, resendToken: _resendToken));
       print('verification -> success');
@@ -55,14 +55,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  void _verifyPhoneNumber(String phoneNumber) async {
+  Future<void> _verifyPhoneNumber(String phoneNumber) async {
     await _appManagerBloc.appAuth
         .verifyPhoneNumber(
       phoneNumber: '+66$phoneNumber',
-      verificationCompleted: (phoneAuthCredential) async {
-        await _appManagerBloc.appAuth.signInWithCredential(phoneAuthCredential);
-      },
-      verificationFailed: (e) => print(e.code),
+      verificationCompleted: (phoneAuthCredential) {},
+      verificationFailed: (e) => add(LoginEventFailure()),
       codeSent: (verificationId, resendToken) {
         _verificationId = verificationId;
         _resendToken = resendToken;
