@@ -4,22 +4,24 @@ class User {
   static const String collection = 'users';
 
   String? id;
-  String firstName;
-  String lastName;
-  DateTime dateOfBirth;
+  String? firstName;
+  String? lastName;
+  DateTime? dateOfBirth;
   String? identityCard;
   String? phoneNumber;
+  String? email;
   String? token;
 
   String get displayName => "$firstName $lastName";
 
   User(
-      {String? id,
-      required this.firstName,
-      required this.lastName,
-      required this.dateOfBirth,
+      {this.id,
+      this.firstName,
+      this.lastName,
+      this.dateOfBirth,
       this.identityCard,
       this.phoneNumber,
+      this.email,
       this.token});
 
   Map<String, dynamic> toJsonWithoutID() {
@@ -31,8 +33,9 @@ class User {
 
     map['firstName'] = firstName;
     map['lastName'] = lastName;
-    map['dateOfBirth'] = dateOfBirth.toIso8601String();
+    map['dateOfBirth'] = dateOfBirth?.toIso8601String();
     map['identityCard'] = identityCard;
+    map['email'] = email;
     map['phoneNumber'] = phoneNumber;
 
     return map;
@@ -41,18 +44,14 @@ class User {
   User.fromJson(dynamic json)
       : firstName = json['firstName'],
         lastName = json['lastName'],
-        dateOfBirth = DateTime.parse(json["dateOfBirth"]),
+        dateOfBirth = json["dateOfBirth"] != null
+            ? DateTime.parse(json["dateOfBirth"])
+            : null,
         identityCard = json['identityCard'],
-        phoneNumber = json['phoneNumber'];
+        phoneNumber = json['phoneNumber'],
+        email = json['email'];
 
   factory User.fromFirebaseUser(firebase.User user) {
-    // var contact = Contact(
-    //   primaryPhoneNumber: user.phoneNumber,
-    //   primaryEmail: user.email,
-    // );
-    // var accountImage = ImageRepository(
-    //   profileURL: user.photoURL,
-    // );
     return User(
       id: user.uid,
       firstName: '',

@@ -22,3 +22,5 @@ class LoginStateSMSReceivedSuccess extends LoginState {
   const LoginStateSMSReceivedSuccess(
       {required this.phoneNumber, required this.resendToken});
 }
+
+class LoginStateClosedOTPView extends LoginState {}

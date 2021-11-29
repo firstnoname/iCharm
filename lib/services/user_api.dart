@@ -13,6 +13,16 @@ class UserAPI extends BaseAPI {
 
   UserAPI._() : super(collectionName: collectionName);
 
+  Future<bool> isUserIdExist({required String uId}) async {
+    return await collection.doc(uId).get().then((value) {
+      if (value.exists) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
   Future<User?> getUser(String? id) async {
     var snapshot = await collection.doc(id).get();
     return (!snapshot.exists)

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:i_charm/blocs/app_manager/app_manager_bloc.dart';
 import 'package:i_charm/widgets/custom_shape_border.dart';
 
 class ProfileView extends StatelessWidget {
@@ -23,6 +25,8 @@ class ProfileView extends StatelessWidget {
       {
         'icon': 'assets/images/profile/profile_logout_menu.svg',
         'title': 'ออกจากระบบ',
+        'onPressed': () => BlocProvider.of<AppManagerBloc>(context)
+            .add(AppManagerEventLogOutRequested()),
       },
     ];
     return Scaffold(
@@ -34,7 +38,9 @@ class ProfileView extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: _menusData
-              .map((menu) => Padding(
+              .map(
+                (menu) => GestureDetector(
+                  child: Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                     child: Row(
@@ -44,7 +50,10 @@ class ProfileView extends StatelessWidget {
                         Text(menu['title']),
                       ],
                     ),
-                  ))
+                  ),
+                  onTap: menu['onPressed'],
+                ),
+              )
               .toList(),
         ),
       ),

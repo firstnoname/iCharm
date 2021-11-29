@@ -10,24 +10,17 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         color: const Color.fromRGBO(255, 227, 219, 1),
-        child: GestureDetector(
-          onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const RegisterView(),
-              )),
-          child: SizedBox.expand(
-            child: FittedBox(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  children: [
-                    Image.asset('assets/icons/splash_screen_logo.png'),
-                    const SizedBox(height: 16),
-                    SvgPicture.asset(
-                        'assets/images/splash_screen_welcome_logo.svg'),
-                  ],
-                ),
+        child: SizedBox.expand(
+          child: FittedBox(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                children: [
+                  Image.asset('assets/icons/splash_screen_logo.png'),
+                  const SizedBox(height: 16),
+                  SvgPicture.asset(
+                      'assets/images/splash_screen_welcome_logo.svg'),
+                ],
               ),
             ),
           ),

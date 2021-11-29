@@ -40,7 +40,7 @@ class ICharmApp extends StatelessWidget {
         } else if (state is AppManagerStatePolicyShowed) {
           displayWidget = const PolicyAgreement();
         } else {
-          displayWidget = LoginView();
+          displayWidget = const LoginView();
         }
         return displayWidget;
       },

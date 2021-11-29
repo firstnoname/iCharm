@@ -19,6 +19,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginEventSubmittedPhoneNumber>(_onSubmitPhoneNumber);
     on<LoginEventSMSReceived>(_onSMSReceived);
     on<LoginEventOTPSubmitted>(_onOTPSubmitted);
+    on<LoginEventOTPViewClosed>(_onOTPViewClosed);
   }
 
   Future<FutureOr<void>> _onSubmitPhoneNumber(
@@ -55,8 +56,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  Future<void> _verifyPhoneNumber(String phoneNumber) async {
-    await _appManagerBloc.appAuth
+  FutureOr<void> _onOTPViewClosed(
+      LoginEventOTPViewClosed event, Emitter<LoginState> emit) {
+    emit(LoginStateClosedOTPView());
+  }
+
+  Future<void> _verifyPhoneNumber(String phoneNumber) {
+    return _appManagerBloc.appAuth
         .verifyPhoneNumber(
       phoneNumber: '+66$phoneNumber',
       verificationCompleted: (phoneAuthCredential) {},

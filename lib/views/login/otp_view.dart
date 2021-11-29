@@ -130,9 +130,10 @@ class _OTPViewState extends State<OTPView> {
             ),
             TextButton(
                 onPressed: () {
+
                   // AppManagerBloc.of(context).dismissKeyboard(context);
-                  // BlocProvider.of<LoginViewBloc>(context)
-                  //     .add(LoginViewEventClosedOTPView());
+                  BlocProvider.of<LoginBloc>(context)
+                      .add(LoginEventOTPViewClosed());
                 },
                 child: const Text('ยเลิก'))
           ],

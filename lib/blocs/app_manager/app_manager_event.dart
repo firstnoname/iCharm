@@ -13,3 +13,5 @@ class AppManagerEventInitialApp extends AppManagerEvent {}
 class AppManagerEventLoginSuccess extends AppManagerEvent {}
 
 class AppManagerEventShowUserPolicy extends AppManagerEvent {}
+
+class AppManagerEventLogOutRequested extends AppManagerEvent {}

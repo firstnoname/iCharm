@@ -8,9 +8,9 @@ abstract class RegisterEvent extends Equatable {
 }
 
 class RegisterEventSubmit extends RegisterEvent {
-  final String phoneNumber;
+  final User userInfo;
 
-  const RegisterEventSubmit(this.phoneNumber);
+  const RegisterEventSubmit({required this.userInfo});
 }
 
 class RegisterEventSMSReceived extends RegisterEvent {}

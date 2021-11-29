@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_charm/blocs/app_manager/app_manager_bloc.dart';
+import 'package:i_charm/models/models.dart';
 import 'package:i_charm/views/login/phone_auth_form.dart';
 
 import 'bloc/register_bloc.dart';
 
 class RegisterView extends StatelessWidget {
-  const RegisterView({Key? key}) : super(key: key);
+  RegisterView({Key? key}) : super(key: key);
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _phoneTextController = TextEditingController();
+    User _userInfo = User();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register'),
+        title: const Text('ลงทะเบียน'),
         centerTitle: true,
         // shape: CustomShapeBorder(),
       ),
@@ -22,6 +24,7 @@ class RegisterView extends StatelessWidget {
         child: BlocBuilder<RegisterBloc, RegisterState>(
           builder: (context, state) {
             return Form(
+              key: formKey,
               child: SingleChildScrollView(
                 child: Padding(
                   padding:
@@ -32,7 +35,7 @@ class RegisterView extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: TextFormField(
                           decoration: InputDecoration(
-                            labelText: "ID Code of iCHARM",
+                            labelText: "รหัส ID จาก iCHARM",
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(0),
@@ -72,7 +75,9 @@ class RegisterView extends StatelessWidget {
                                   //   return null;
                                   // }
                                 },
-                                keyboardType: TextInputType.emailAddress,
+                                keyboardType: TextInputType.name,
+                                onSaved: (newValue) =>
+                                    _userInfo.firstName = newValue,
                               ),
                             ),
                             const SizedBox(width: 4),
@@ -94,7 +99,9 @@ class RegisterView extends StatelessWidget {
                                   //   return null;
                                   // }
                                 },
-                                keyboardType: TextInputType.emailAddress,
+                                keyboardType: TextInputType.name,
+                                onSaved: (newValue) =>
+                                    _userInfo.lastName = newValue,
                               ),
                             ),
                           ],
@@ -120,37 +127,23 @@ class RegisterView extends StatelessWidget {
                             // }
                           },
                           keyboardType: TextInputType.emailAddress,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: TextFormField(
-                          controller: _phoneTextController,
-                          maxLength: 9,
-                          keyboardType: TextInputType.datetime,
-                          decoration: InputDecoration(
-                            prefix: const Text('(+66) '),
-                            labelText: "เบอร์โทร",
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(0),
-                              borderSide: const BorderSide(),
-                            ),
-                            //fillColor: Colors.green
-                          ),
-                          validator: (val) {
-                            // if (val.length == 0) {
-                            //   return "Email cannot be empty";
-                            // } else {
-                            //   return null;
-                            // }
-                          },
+                          onSaved: (newValue) => _userInfo.email = newValue,
                         ),
                       ),
                       ElevatedButton(
-                          onPressed: () => context.read<RegisterBloc>().add(
-                              RegisterEventSubmit(_phoneTextController.text)),
-                          child: const Text('Register'))
+                          onPressed: () {
+                            formKey.currentState?.save();
+                            _userInfo.id = context
+                                .read<AppManagerBloc>()
+                                .appAuth
+                                .firebaseCurrentUser!
+                                .uid;
+                            _userInfo.phoneNumber = '';
+                            context
+                                .read<RegisterBloc>()
+                                .add(RegisterEventSubmit(userInfo: _userInfo));
+                          },
+                          child: const Text('ลงทะเบียน'))
                     ],
                   ),
                 ),

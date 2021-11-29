@@ -5,12 +5,11 @@ import 'package:i_charm/blocs/app_manager/app_manager_bloc.dart';
 import 'package:i_charm/views/login/otp_view.dart';
 import 'package:i_charm/views/main_view/main_view.dart';
 import 'package:i_charm/views/views.dart';
-import 'package:path/path.dart';
 
 import 'bloc/login_bloc.dart';
 
 class LoginView extends StatefulWidget {
-  LoginView({Key? key}) : super(key: key);
+  const LoginView({Key? key}) : super(key: key);
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -72,25 +71,25 @@ class _LoginViewState extends State<LoginView> {
               ElevatedButton(
                 onPressed: () => context.read<LoginBloc>().add(
                     LoginEventSubmittedPhoneNumber(_textPhoneController.text)),
-                child: const Text('Login'),
+                child: const Text('เข้าสู่ระบบ'),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Don\'t have an account? '),
-                    TextButton(
-                      child: const Text('Register here'),
-                      onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterView(),
-                          )),
-                    )
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(vertical: 16),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       const Text('Don\'t have an account? '),
+              //       TextButton(
+              //         child: const Text('Register here'),
+              //         onPressed: () => Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (context) => RegisterView(),
+              //             )),
+              //       )
+              //     ],
+              //   ),
+              // ),
               TextButton(
                 child: const Text('See as guest'),
                 onPressed: () => Navigator.pushReplacement(

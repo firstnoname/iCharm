@@ -24,3 +24,5 @@ class LoginEventOTPSubmitted extends LoginEvent {
 
   const LoginEventOTPSubmitted({required this.otpCode});
 }
+
+class LoginEventOTPViewClosed extends LoginEvent {}
