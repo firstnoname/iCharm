@@ -10,6 +10,7 @@ class User {
   String? identityCard;
   String? phoneNumber;
   String? email;
+  String? userName;
   String? token;
 
   String get displayName => "$firstName $lastName";
@@ -31,24 +32,27 @@ class User {
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
 
-    map['firstName'] = firstName;
-    map['lastName'] = lastName;
-    map['dateOfBirth'] = dateOfBirth?.toIso8601String();
-    map['identityCard'] = identityCard;
+    map['first_name'] = firstName;
+    map['last_name'] = lastName;
+    map['date_of_birth'] = dateOfBirth?.toIso8601String();
+    map['identity_card'] = identityCard;
     map['email'] = email;
-    map['phoneNumber'] = phoneNumber;
+    map['username'] = userName;
+    map['phone_number'] = phoneNumber;
 
     return map;
   }
 
   User.fromJson(dynamic json)
-      : firstName = json['firstName'],
-        lastName = json['lastName'],
-        dateOfBirth = json["dateOfBirth"] != null
-            ? DateTime.parse(json["dateOfBirth"])
+      : id = json['uid'],
+        firstName = json['first_name'],
+        lastName = json['last_name'],
+        dateOfBirth = json["date_of_birth"] != null
+            ? DateTime.parse(json["date_of_birth"])
             : null,
-        identityCard = json['identityCard'],
-        phoneNumber = json['phoneNumber'],
+        identityCard = json['identity_card'],
+        phoneNumber = json['phone_number'],
+        userName = json['username'],
         email = json['email'];
 
   factory User.fromFirebaseUser(firebase.User user) {

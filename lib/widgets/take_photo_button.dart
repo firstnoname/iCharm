@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:i_charm/blocs/blocs.dart';
+import 'package:i_charm/views/my_icharm/bloc/my_icharm_bloc.dart';
 import 'package:i_charm/views/views.dart';
 
 class TakePhotoButton extends StatelessWidget {
@@ -19,7 +22,12 @@ class TakePhotoButton extends StatelessWidget {
       onPressed: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const TakePhotoStepper(),
+          builder: (_) {
+            return BlocProvider.value(
+              value: context.read<PatientInfoManagerBloc>(),
+              child: const TakePhotoStepper(),
+            );
+          },
         ),
       ),
     );

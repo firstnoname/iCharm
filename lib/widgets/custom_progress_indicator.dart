@@ -16,7 +16,8 @@ class _CustomProgressIndicatorState extends State<CustomProgressIndicator> {
   late double _height;
   late double _width;
 
-  double percent = 0.0;
+  // double percent = 0.0;
+  double percent = 99.0;
 
   @override
   void initState() {

@@ -20,6 +20,7 @@ class AppManagerBloc extends Bloc<AppManagerEvent, AppManagerState> {
   Authentication get appAuth => _appAuth;
 
   User? _currentUser;
+  User? get currentUser => _currentUser;
 
   AppManagerBloc(this.firstCamera) : super(AppManagerInitialInProgress()) {
     Bloc.observer = ABlocObserver();

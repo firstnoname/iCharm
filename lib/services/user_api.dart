@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:i_charm/models/models.dart';
-import 'package:i_charm/services/base_api.dart';
+import 'package:i_charm/services/services.dart';
 
-class UserAPI extends BaseAPI {
+class UserAPI extends BasedAPI {
   static const collectionName = "users";
   static UserAPI? _cache;
 

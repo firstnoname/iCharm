@@ -6,3 +6,10 @@ abstract class TakePhotoEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class TakePhotoEventAddedImagePath extends TakePhotoEvent {
+  final String imagePath;
+  final int index;
+
+  const TakePhotoEventAddedImagePath(this.imagePath, this.index);
+}

@@ -7,9 +7,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:i_charm/blocs/blocs.dart';
 
+import 'bloc/take_photo_bloc.dart';
+
 class CameraLayout extends StatefulWidget {
   final int activeStep;
-  const CameraLayout({Key? key, required this.activeStep}) : super(key: key);
+  String? imagePath;
+
+  CameraLayout({Key? key, required this.activeStep, this.imagePath})
+      : super(key: key);
 
   @override
   _CameraLayoutState createState() => _CameraLayoutState();
@@ -25,6 +30,7 @@ class _CameraLayoutState extends State<CameraLayout> {
   @override
   void initState() {
     super.initState();
+
     _controller = CameraController(
       // Get a specific camera from the list of available cameras.
       BlocProvider.of<AppManagerBloc>(context).firstCamera,
@@ -43,6 +49,7 @@ class _CameraLayoutState extends State<CameraLayout> {
 
   @override
   Widget build(BuildContext context) {
+    imagePath = widget.imagePath ?? '';
     return Expanded(
       child: Column(
         children: [
@@ -157,8 +164,12 @@ class _CameraLayoutState extends State<CameraLayout> {
                       // where it was saved.
                       final image = await _controller.takePicture();
 
+                      context.read<TakePhotoBloc>().add(
+                          TakePhotoEventAddedImagePath(
+                              image.path, widget.activeStep));
                       setState(() {
                         imagePath = image.path;
+                        widget.imagePath = imagePath;
                       });
                     } catch (e) {
                       // If an error occurs, log the error to the console.

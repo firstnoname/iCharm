@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:i_charm/blocs/blocs.dart';
 import 'package:i_charm/views/smile_gallery/smile_gallery_view.dart';
 
 class UpdatePhotosSuccess extends StatelessWidget {
@@ -39,7 +41,13 @@ class UpdatePhotosSuccess extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const SmileGalleryView(),
+                      builder: (_) {
+                        return BlocProvider.value(
+                          value: context.read<PatientInfoManagerBloc>()
+                            ..add(PatientManagerEventGetUploadImages()),
+                          child: const SmileGalleryView(),
+                        );
+                      },
                     ),
                   );
                 },
