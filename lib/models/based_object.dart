@@ -1,8 +1,8 @@
 import 'log.dart';
 
 abstract class BasedObject {
-  final String id;
-  final Log log;
+  final String? id;
+  final Log? log;
 
   BasedObject({required this.id, required this.log});
 
@@ -12,7 +12,7 @@ abstract class BasedObject {
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
     map['id'] = id;
-    map['log'] = log.toJson();
+    map['log'] = log?.toJson();
     return map;
   }
 }

@@ -5,6 +5,8 @@ export 'address.dart';
 
 export 'geolocation.dart';
 
+export 'clinic.dart';
+
 export 'patient/patient_info.dart';
 export 'patient/aligner.dart';
 export 'patient/aligner_history.dart';

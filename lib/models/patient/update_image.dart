@@ -20,12 +20,13 @@ class UploadImage {
 
   UploadImage.fromJson(dynamic json) {
     id = json['id'];
-    alignerNumber = json['aligner_number'];
+
     image01 = json['image_url']['image_01'];
     image02 = json['image_url']['image_02'];
     image03 = json['image_url']['image_03'];
     image04 = json['image_url']['image_04'];
     uploadDate = json['upload_date'];
+    alignerNumber = json['aligner_number'];
   }
 
   Map<String, dynamic> toJson() {

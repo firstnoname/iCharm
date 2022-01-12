@@ -101,9 +101,6 @@ class _OTPViewState extends State<OTPView> {
                     padding: const EdgeInsets.all(4.0),
                     primary: Theme.of(context).accentColor,
                   ),
-                  // onPressed: () => BlocProvider.of<LoginViewBloc>(context).add(
-                  //   LoginViewEventResentOTP(),
-                  // ),
                   onPressed: () {},
                   child: const Text('ส่งใหม่'),
                 )
@@ -130,7 +127,6 @@ class _OTPViewState extends State<OTPView> {
             ),
             TextButton(
                 onPressed: () {
-
                   // AppManagerBloc.of(context).dismissKeyboard(context);
                   BlocProvider.of<LoginBloc>(context)
                       .add(LoginEventOTPViewClosed());

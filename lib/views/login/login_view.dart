@@ -73,23 +73,6 @@ class _LoginViewState extends State<LoginView> {
                     LoginEventSubmittedPhoneNumber(_textPhoneController.text)),
                 child: const Text('เข้าสู่ระบบ'),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(vertical: 16),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       const Text('Don\'t have an account? '),
-              //       TextButton(
-              //         child: const Text('Register here'),
-              //         onPressed: () => Navigator.push(
-              //             context,
-              //             MaterialPageRoute(
-              //               builder: (context) => RegisterView(),
-              //             )),
-              //       )
-              //     ],
-              //   ),
-              // ),
               TextButton(
                 child: const Text('See as guest'),
                 onPressed: () => Navigator.pushReplacement(

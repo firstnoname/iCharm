@@ -27,7 +27,7 @@ class ImageAPI extends BasedAPI {
       uploadImages.add(UploadImage.fromJson(
           uploadImage.data()..addAll({'id': uploadImage.id})));
     }
-
+    uploadImages.sort((a, b) => a.uploadDate!.compareTo(b.uploadDate!));
     return uploadImages;
   }
 

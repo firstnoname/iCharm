@@ -42,20 +42,15 @@ class PatientAPI extends BasedAPI {
 
   Future<PatientInfo?> getPatientInfo({required String uid}) async {
     PatientInfo? patientInfo;
-    // await collection.where('user_info.uid', isEqualTo: uid).get().then((value) {
-    //   for (var result in value.docs) {
-    //     // print('patient info -> ${result.data()}');
-    //     patientInfo =
-    //         PatientInfo.fromJson(result.data()..addAll({'id': result.id}));
-    //   }
-    // }).catchError((e) {
-    //   print('get patient info error -> ${e.toString()}');
-    // });
-    // return patientInfo;
+
     var response =
         await collection.where('user_info.uid', isEqualTo: uid).get();
 
-    return PatientInfo.fromJson(
-        response.docs.first.data()..addAll({'id': response.docs.first.id}));
+    if (response.docs.isNotEmpty) {
+      return PatientInfo.fromJson(
+          response.docs.first.data()..addAll({'id': response.docs.first.id}));
+    } else {
+      return null;
+    }
   }
 }

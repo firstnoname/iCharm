@@ -21,6 +21,16 @@ class PatientManagerUploadedImages extends PatientInfoManagerEvent {
   });
 }
 
-class PatientManagerEventGetHistory extends PatientInfoManagerEvent {}
+class PatientManagerEventGetHistory extends PatientInfoManagerEvent {
+  final Timestamp queryDate;
+
+  const PatientManagerEventGetHistory({required this.queryDate});
+}
 
 class PatientManagerEventGetUploadImages extends PatientInfoManagerEvent {}
+
+class PatientManagerEventAddHistory extends PatientInfoManagerEvent {
+  final AlignerHistory history;
+
+  const PatientManagerEventAddHistory(this.history);
+}

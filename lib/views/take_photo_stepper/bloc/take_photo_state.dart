@@ -9,6 +9,8 @@ abstract class TakePhotoState extends Equatable {
 
 class TakePhotoInitial extends TakePhotoState {}
 
+class TakePhotoStateInProgress extends TakePhotoState {}
+
 class TakePhotoStateAddedImagePathSuccess extends TakePhotoState {
   final Map<int, String> imagePath;
 

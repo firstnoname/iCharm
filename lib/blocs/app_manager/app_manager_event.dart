@@ -15,3 +15,9 @@ class AppManagerEventLoginSuccess extends AppManagerEvent {}
 class AppManagerEventShowUserPolicy extends AppManagerEvent {}
 
 class AppManagerEventLogOutRequested extends AppManagerEvent {}
+
+class AppManagerEventProfileSubmitted extends AppManagerEvent {
+  final User userInfo;
+
+  const AppManagerEventProfileSubmitted({required this.userInfo});
+}

@@ -16,7 +16,7 @@ class Aligner {
 
   Aligner.fromJson(Map<String, dynamic> json) {
     alignerNumber = json['aligner_number'];
-    date = json['date'];
+    date = json['upload_date'];
     uploadImage = [];
     if (json['upload_image'] != null) {
       uploadImage = [];

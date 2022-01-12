@@ -10,6 +10,7 @@ part 'take_photo_state.dart';
 class TakePhotoBloc extends Bloc<TakePhotoEvent, TakePhotoState> {
   TakePhotoBloc() : super(TakePhotoInitial()) {
     on<TakePhotoEventAddedImagePath>(_onAddedImagePath);
+    on<TakePhotoEventInProgress>(_onTakePhotoInProgress);
   }
 
   final Map<int, String> _rawImagePath = {};
@@ -35,5 +36,10 @@ class TakePhotoBloc extends Bloc<TakePhotoEvent, TakePhotoState> {
       ..addEntries(mapEntries);
 
     emit(TakePhotoStateAddedImagePathSuccess(imagePath: _rawImagePath));
+  }
+
+  FutureOr<void> _onTakePhotoInProgress(
+      TakePhotoEventInProgress event, Emitter<TakePhotoState> emit) {
+    emit(TakePhotoStateInProgress());
   }
 }

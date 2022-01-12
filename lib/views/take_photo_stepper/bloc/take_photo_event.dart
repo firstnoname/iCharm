@@ -7,6 +7,8 @@ abstract class TakePhotoEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class TakePhotoEventInProgress extends TakePhotoEvent {}
+
 class TakePhotoEventAddedImagePath extends TakePhotoEvent {
   final String imagePath;
   final int index;

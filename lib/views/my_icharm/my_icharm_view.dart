@@ -1,21 +1,58 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:i_charm/blocs/blocs.dart';
+import 'package:i_charm/models/patient/aligner_history.dart';
 import 'package:i_charm/models/patient/patient_info.dart';
 import 'package:i_charm/utilities/utilities.dart';
 import 'package:i_charm/views/views.dart';
 import 'package:i_charm/widgets/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class MyICharmVIew extends StatelessWidget {
+class MyICharmVIew extends StatefulWidget {
   const MyICharmVIew({Key? key}) : super(key: key);
 
   @override
+  State<MyICharmVIew> createState() => _MyICharmVIewState();
+}
+
+class _MyICharmVIewState extends State<MyICharmVIew> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  late PatientInfo _patientInfo;
+
+  bool isStart = false;
+  late Timestamp startTime;
+  late SharedPreferences prefs;
+
+  Future<void> _counterStart(Timestamp startTime) async {
+    prefs = await _prefs;
+    prefs.setInt('startTime', startTime.millisecondsSinceEpoch);
+  }
+
+  Future<Timestamp> _getStartTime() async {
+    prefs = await _prefs;
+    print(
+        'startTime -> ${Timestamp.fromMillisecondsSinceEpoch(prefs.getInt('startTime') ?? 0)}');
+    return Timestamp.fromMillisecondsSinceEpoch(prefs.getInt('startTime') ?? 0);
+  }
+
+  Future _clearStartTime() async {
+    prefs = await _prefs;
+    prefs.clear();
+    print(
+        '${Timestamp.fromMillisecondsSinceEpoch(prefs.getInt('startTime') ?? 0)}');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    PatientInfo _patientInfo;
     double _circleSize = MediaQuery.of(context).size.width * 0.3;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('My iCharm'),
+      ),
       body: BlocBuilder<PatientInfoManagerBloc, PatientInfoManagerState>(
         buildWhen: (previous, current) {
           if (current is PatientManagerStateUploadImageSuccess) {
@@ -27,6 +64,26 @@ class MyICharmVIew extends StatelessWidget {
         builder: (context, state) {
           if (state is PatientManagerStateGetInfoSuccess) {
             _patientInfo = state.patientInfo;
+            List<AlignerHistory> currentDateHistories =
+                _patientInfo.aligner!.alignerHistory!.where((history) {
+              bool isEqual = history.createDate!
+                          .toDate()
+                          .difference(DateTime.now())
+                          .inDays ==
+                      0
+                  ? true
+                  : false;
+
+              return isEqual;
+            }).toList();
+
+            double hours = 0.0;
+            double percents = 0.0;
+            for (var history in currentDateHistories) {
+              hours += double.parse(history.total!);
+            }
+            percents = (hours / 22) * 100;
+
             return SingleChildScrollView(
               child: Center(
                 child: Column(
@@ -47,26 +104,95 @@ class MyICharmVIew extends StatelessWidget {
                                 icon: const Icon(Icons.refresh),
                                 onPressed: () {},
                               ),
-                              const Text('Change to Aligner #4'),
+                              Text(
+                                  'Change to Aligner #${_patientInfo.alignerInfo!.currentAligner! + 1}'),
                             ],
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 150,
                             width: 150,
-                            child: CustomProgressIndicator(),
+                            child: CustomProgressIndicator(percents: percents),
                           ),
                           const SizedBox(height: 16),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              SvgPicture.asset(
-                                  'assets/images/my_icharm/play_pause_icon.svg'),
+                              FutureBuilder(
+                                  future: _getStartTime(),
+                                  builder: (context,
+                                      AsyncSnapshot<Timestamp> snapshot) {
+                                    if (snapshot.hasData) {
+                                      startTime = snapshot.data!;
+
+                                      if (startTime.millisecondsSinceEpoch !=
+                                          0) {
+                                        isStart = true;
+                                      } else {
+                                        startTime = Timestamp
+                                            .fromMillisecondsSinceEpoch(0);
+                                        isStart = false;
+                                      }
+                                    } else {
+                                      startTime =
+                                          Timestamp.fromMillisecondsSinceEpoch(
+                                              0);
+                                      isStart = false;
+                                    }
+
+                                    return GestureDetector(
+                                      child: isStart == false
+                                          ? SvgPicture.asset(
+                                              'assets/images/my_icharm/play_pause_icon.svg')
+                                          : const Icon(Icons.pause),
+                                      onTap: () async {
+                                        if (isStart == false) {
+                                          _counterStart(Timestamp.fromDate(
+                                              DateTime.now()));
+                                          setState(() {
+                                            isStart = true;
+                                          });
+                                        } else {
+                                          startTime = await _getStartTime();
+                                          DateTime currentTime = DateTime.now();
+                                          context
+                                              .read<PatientInfoManagerBloc>()
+                                              .add(
+                                                PatientManagerEventAddHistory(
+                                                  AlignerHistory(
+                                                    createDate:
+                                                        Timestamp.fromDate(
+                                                            currentTime),
+                                                    start:
+                                                        '${startTime.toDate().hour}.${startTime.toDate().minute}',
+                                                    end:
+                                                        '${DateTime.now().hour}.${DateTime.now().minute}',
+                                                    total:
+                                                        '${DateTime.now().hour - startTime.toDate().hour}.${DateTime.now().minute - startTime.toDate().minute}',
+                                                  ),
+                                                ),
+                                              );
+                                          _clearStartTime();
+
+                                          setState(() {
+                                            isStart = false;
+                                          });
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content:
+                                                  Text('เพิ่มข้อมูลสำเร็จ'),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    );
+                                  }),
                               IconButton(
                                 icon: SvgPicture.asset(
                                     'assets/images/my_icharm/reminder_icon.svg'),
-                                onPressed: () => showDialog(
+                                onPressed: () => showCupertinoModalPopup(
                                   context: context,
-                                  builder: (context) {
+                                  builder: (BuildContext context) {
                                     return const CreateReminderDialog();
                                   },
                                 ),
@@ -88,10 +214,21 @@ class MyICharmVIew extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ScheduleView(),
+                                onTap: () =>
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (_) {
+                                        return BlocProvider.value(
+                                          value: context
+                                              .read<PatientInfoManagerBloc>()
+                                            ..add(PatientManagerEventGetHistory(
+                                                queryDate: Timestamp.fromDate(
+                                                    DateTime.now().subtract(
+                                                        const Duration(
+                                                            hours: 0,
+                                                            minutes: 0))))),
+                                          child: const ScheduleView(),
+                                        );
+                                      },
                                     ))),
                           ),
                           const SizedBox(height: 16),

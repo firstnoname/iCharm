@@ -30,6 +30,7 @@ class AppManagerBloc extends Bloc<AppManagerEvent, AppManagerState> {
     on<AppManagerEventLoginSuccess>(_onAppManagerLoginSuccess);
     on<AppManagerEventShowUserPolicy>(_onAppManagerShowUserPolicy);
     on<AppManagerEventLogOutRequested>(_onAppManagerLogOutRequested);
+    on<AppManagerEventProfileSubmitted>(_onAppManagerSubmittedProfile);
   }
 
   Future<void> _onAppManagerInitial(
@@ -68,6 +69,17 @@ class AppManagerBloc extends Bloc<AppManagerEvent, AppManagerState> {
     await _appAuth.signOut();
     _currentUser = null;
     return AppManagerStateUnauthenticated();
+  }
+
+  Future<FutureOr<void>> _onAppManagerSubmittedProfile(
+      AppManagerEventProfileSubmitted event,
+      Emitter<AppManagerState> emit) async {
+    User userInfo = _currentUser!;
+    userInfo.firstName = event.userInfo.firstName;
+    userInfo.lastName = event.userInfo.lastName;
+    // update user info to firebase here.
+    userInfo = await UserAPI().updateUserInfo(userInfo);
+    updateCurrentUserProfile(userInfo);
   }
 
   void updateCurrentUserProfile(User? user) {

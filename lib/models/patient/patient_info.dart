@@ -4,11 +4,13 @@ class PatientInfo extends BasedObject {
   User? userInfo;
   AlignerInfo? alignerInfo;
   Aligner? aligner;
+  String? caseId;
 
   PatientInfo({
     String? id,
     this.userInfo,
     this.alignerInfo,
+    this.caseId,
     required Log log,
   }) : super(id: id = '', log: log);
 
@@ -23,6 +25,9 @@ class PatientInfo extends BasedObject {
     if (json['aligner'] != null) {
       aligner = Aligner.fromJson(json['aligner']);
     }
+    if (json['case_id'] != null) {
+      caseId = json['case_id'];
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +36,7 @@ class PatientInfo extends BasedObject {
     map['user_info'] = userInfo != null ? userInfo!.toJson() : null;
     map['aligner'] = aligner != null ? aligner!.toJson() : null;
     map['aligner_info'] = alignerInfo?.toJson();
+    map['case_id'] = caseId;
     return map;
   }
 }

@@ -27,7 +27,7 @@ class AlignerHistory {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['create_date'] = createDate;
-    data['aigner_number'] = alignerNumber;
+    data['aligner_number'] = alignerNumber;
     data['start'] = start;
     data['end'] = end;
     data['total'] = total;

@@ -65,12 +65,10 @@ class Authentication {
   checkCurrentUserProfile() async {
     UserAPI().getUser(_firebaseAuth.currentUser!.uid).then((user) async {
       if (user == null) {
-        // _appManagerBloc.registerState = true;
         _appManagerBloc.updateCurrentUserProfile(
             hexa.User.fromFirebaseUser(_firebaseAuth.currentUser!));
         _appManagerBloc.add(AppManagerEventShowUserPolicy());
       } else {
-        print('user not null ');
         _appManagerBloc.updateCurrentUserProfile(user);
         _appManagerBloc.add(AppManagerEventLoginSuccess());
       }
