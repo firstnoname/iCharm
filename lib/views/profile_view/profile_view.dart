@@ -153,7 +153,7 @@ class ProfileView extends StatelessWidget {
                     return BlocProvider.value(
                       value: BlocProvider.of<PatientInfoManagerBloc>(context)
                         ..add(PatientManagerEventGetUploadImages()),
-                      child: const SmileGalleryView(),
+                      child: const ContactUsView(),
                     );
                   },
                 ),

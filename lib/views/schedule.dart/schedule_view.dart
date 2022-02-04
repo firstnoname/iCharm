@@ -56,11 +56,12 @@ class _ScheduleViewState extends State<ScheduleView> {
                       patientInfo.aligner!.alignerHistory!.where((element) {
                     bool isEqual = element.createDate!
                                 .toDate()
-                                .difference(DateTime.now())
+                                .difference(_selectedDay)
                                 .inDays ==
                             0
                         ? true
                         : false;
+
                     if (isEqual == true) {
                       totalTime += double.parse(element.total!);
                     }
@@ -99,79 +100,5 @@ class _ScheduleViewState extends State<ScheduleView> {
         ),
       ),
     );
-
-    // return Scaffold(
-    //   appBar: AppBar(),
-    //   body: SingleChildScrollView(
-    //     child: BlocBuilder<PatientInfoManagerBloc, PatientInfoManagerState>(
-    //       builder: (context, state) {
-    //         if (state is PatientManagerStateGetInfoSuccess) {
-    //           PatientInfo patientInfo =
-    //               context.read<PatientInfoManagerBloc>().patientInfo;
-    //           List<AlignerHistory> history = [];
-    //           if (patientInfo.aligner?.alignerHistory != null) {
-    //             List<AlignerHistory> history =
-    //                 patientInfo.aligner!.alignerHistory!;
-    //           }
-
-    //           // if (patientInfo.aligner!.alignerHistory!.isNotEmpty) {
-    //           //   _selectedDay = patientInfo
-    //           //           .aligner?.alignerHistory?[0].createDate
-    //           //           ?.toDate() ??
-    //           //       DateTime.now();
-    //           // }
-
-    //           return Column(
-    //             children: [
-    //               TableCalendar(
-    //                 firstDay: _firstDay,
-    //                 focusedDay: _selectedDay,
-    //                 lastDay: _lastDay,
-    //                 currentDay: _selectedDay,
-    //                 onDaySelected: (selectedDay, focusedDay) {
-    //                   context.read<PatientInfoManagerBloc>().add(
-    //                       PatientManagerEventGetHistory(
-    //                           queryDate: Timestamp.fromDate(selectedDay)));
-    //                   setState(() {
-    //                     _selectedDay = selectedDay;
-    //                   });
-    //                 },
-    //               ),
-    //               Container(
-    //                 color: Colors.grey[200],
-    //                 child: Padding(
-    //                   padding: const EdgeInsets.all(8.0),
-    //                   child: Row(
-    //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //                     children: const [
-    //                       Text('Total: 22 hrs 45 mins'),
-    //                       Text('Aligner #4'),
-    //                     ],
-    //                   ),
-    //                 ),
-    //               ),
-    //               BlocBuilder<PatientInfoManagerBloc, PatientInfoManagerState>(
-    //                 builder: (context, state) {
-    //                   return ListView.builder(
-    //                     shrinkWrap: true,
-    //                     itemCount: history.length,
-    //                     itemBuilder: (context, index) => ListTile(
-    //                       title: Text(
-    //                           '${history[index].start ?? ''} PM - ${history[index].end ?? ''} AM (${history[index].total ?? ''} hrs.)'),
-    //                     ),
-    //                   );
-    //                 },
-    //               ),
-    //             ],
-    //           );
-    //         } else {
-    //           return const Center(
-    //             child: CircularProgressIndicator(),
-    //           );
-    //         }
-    //       },
-    //     ),
-    //   ),
-    // );
   }
 }

@@ -63,10 +63,12 @@ class PatientInfoManagerBloc
 
   Future<FutureOr<void>> _onAddHistory(PatientManagerEventAddHistory event,
       Emitter<PatientInfoManagerState> emit) async {
-    AlignerHistory uploadedHistory = await HistoryAPI().addHistory(
-        docId: _patientInfo!.id!,
-        currentAligner: _patientInfo!.alignerInfo!.currentAligner!,
-        history: event.history);
+    // AlignerHistory uploadedHistory = await HistoryAPI().addHistory(
+    //     docId: _patientInfo!.id!,
+    //     currentAligner: _patientInfo!.alignerInfo!.currentAligner!,
+    //     history: event.history);
+    AlignerHistory uploadedHistory = event.history;
+    print('${uploadedHistory.total}');
     if (uploadedHistory.id != null) {
       _patientInfo!.aligner!.alignerHistory!.add(uploadedHistory);
     }

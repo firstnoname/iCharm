@@ -6,7 +6,9 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class CustomProgressIndicator extends StatefulWidget {
   final double percents;
-  const CustomProgressIndicator({Key? key, required this.percents})
+  final double remainingTime;
+  const CustomProgressIndicator(
+      {Key? key, required this.percents, required this.remainingTime})
       : super(key: key);
 
   @override
@@ -15,29 +17,13 @@ class CustomProgressIndicator extends StatefulWidget {
 }
 
 class _CustomProgressIndicatorState extends State<CustomProgressIndicator> {
-  late double _height;
-  late double _width;
-
   @override
   void initState() {
-    // late Timer timer;
-    // timer = Timer.periodic(const Duration(milliseconds: 300), (_) {
-    //   print('Percent Update');
-    //   setState(() {
-    //     percent += 1;
-    //     if (percent >= 100) {
-    //       timer.cancel();
-    //       // percent=0;
-    //     }
-    //   });
-    // });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    _height = MediaQuery.of(context).size.height;
-    _width = MediaQuery.of(context).size.width;
     return SizedBox(
       height: 130,
       width: 130,
@@ -49,9 +35,9 @@ class _CustomProgressIndicatorState extends State<CustomProgressIndicator> {
         borderWidth: 4.0,
         direction: Axis.vertical,
         center: Text(
-          widget.percents.toStringAsFixed(2) + "%",
+          widget.remainingTime > 0 ? widget.remainingTime.toString() : '00:00',
           style: const TextStyle(
-              fontSize: 12.0, fontWeight: FontWeight.w600, color: Colors.white),
+              fontSize: 24.0, fontWeight: FontWeight.w600, color: Colors.white),
         ),
       ),
     );

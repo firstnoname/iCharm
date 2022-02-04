@@ -131,7 +131,7 @@ class _OTPViewState extends State<OTPView> {
                   BlocProvider.of<LoginBloc>(context)
                       .add(LoginEventOTPViewClosed());
                 },
-                child: const Text('ยเลิก'))
+                child: const Text('ยกเลิก'))
           ],
         );
       },

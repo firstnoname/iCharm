@@ -9,6 +9,7 @@ import 'package:i_charm/models/patient/patient_info.dart';
 import 'package:i_charm/utilities/utilities.dart';
 import 'package:i_charm/views/views.dart';
 import 'package:i_charm/widgets/widgets.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyICharmVIew extends StatefulWidget {
@@ -52,6 +53,7 @@ class _MyICharmVIewState extends State<MyICharmVIew> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My iCharm'),
+        centerTitle: true,
       ),
       body: BlocBuilder<PatientInfoManagerBloc, PatientInfoManagerState>(
         buildWhen: (previous, current) {
@@ -99,19 +101,26 @@ class _MyICharmVIewState extends State<MyICharmVIew> {
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.refresh),
-                                onPressed: () {},
-                              ),
-                              Text(
-                                  'Change to Aligner #${_patientInfo.alignerInfo!.currentAligner! + 1}'),
+                            children: const [
+                              // IconButton(
+                              //   icon: const Icon(Icons.refresh),
+                              //   onPressed: () {},
+                              // ),
+                              // Text(
+                              //     'Change to Aligner #${_patientInfo.alignerInfo!.currentAligner! + 1}'),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Text('เวลาคงเหลือในการใส่อุปกรณ์'),
+                              )
                             ],
                           ),
                           SizedBox(
                             height: 150,
                             width: 150,
-                            child: CustomProgressIndicator(percents: percents),
+                            child: CustomProgressIndicator(
+                              percents: percents,
+                              remainingTime: 22 - hours,
+                            ),
                           ),
                           const SizedBox(height: 16),
                           Row(
@@ -154,6 +163,27 @@ class _MyICharmVIewState extends State<MyICharmVIew> {
                                         } else {
                                           startTime = await _getStartTime();
                                           DateTime currentTime = DateTime.now();
+
+                                          // เวลาที่เริ่ม - เวลาที่เหลือของวัน
+                                          // if stop date not equal to current date?
+                                          var diffDay = DateTime(
+                                            currentTime.year,
+                                            currentTime.month,
+                                            currentTime.day,
+                                            0,
+                                            0,
+                                          )
+                                              .difference(DateTime(
+                                                startTime.toDate().year,
+                                                startTime.toDate().month,
+                                                24,
+                                                0,
+                                                0,
+                                              ))
+                                              .inDays;
+                                          if (diffDay > 0) {}
+                                          print(
+                                              'diff day ${startTime.toDate()} : ${currentTime} -> $diffDay');
                                           context
                                               .read<PatientInfoManagerBloc>()
                                               .add(

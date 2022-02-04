@@ -34,3 +34,5 @@ class PatientManagerEventAddHistory extends PatientInfoManagerEvent {
 
   const PatientManagerEventAddHistory(this.history);
 }
+
+class PatientMangerEventGetAdvertis extends PatientInfoManagerEvent {}

@@ -19,3 +19,5 @@ export 'find_icharm/find_icharm_map.dart';
 export 'question_and_answer/question_and_answer.dart';
 
 export 'edit_profile/edit_profile_view.dart';
+
+export 'contact_us/contact_us_view.dart';

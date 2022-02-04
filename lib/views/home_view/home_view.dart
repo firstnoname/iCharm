@@ -115,6 +115,88 @@ class HomeView extends StatelessWidget {
                         ),
                       )
                       .toList(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.5,
+                    // child: ListView.builder(
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemCount: 10,
+                    //   itemBuilder: (context, index) {
+                    //     return Container(
+                    //       width: MediaQuery.of(context).size.width / 1.4,
+                    //       padding: const EdgeInsets.symmetric(horizontal: 8),
+                    //       child: Card(
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(30),
+                    //         ),
+                    //         child: SvgPicture.asset(
+                    //           'assets/test_banner.svg',
+                    //           fit: BoxFit.fill,
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Card(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/test_banner_1.jpg',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Card(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/test_banner_2.jpg',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Card(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/test_banner_3.jpg',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Card(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/test_banner_4.jpg',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 )
               ],
             ),
